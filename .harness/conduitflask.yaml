@@ -33,7 +33,7 @@ pipeline:
                   identifier: Install_Dependencies
                   spec:
                     connectorRef: account.harnessImage
-                    image: python:latest
+                    image: python:3.11-slim
                     shell: Sh
                     command: |
                       sudo apt-get update && sudo apt-get install -y python3-dev cargo && pip install poetry && poetry install
@@ -43,7 +43,7 @@ pipeline:
                   identifier: Unittest
                   spec:
                     connectorRef: account.harnessImage
-                    image: python:latest
+                    image: python:3.11-slim
                     shell: Sh
                     command: |
                       python -m unittest realworld.tests.test_units --junit-xml=output-test.xml
