@@ -33,7 +33,7 @@ pipeline:
                   identifier: Install_Dependencies
                   spec:
                     connectorRef: account.harnessImage
-                    image: sunpeek/poetry:3.11-slim
+                    image: sunpeek/poetry
                     shell: Sh
                     command: |
                       poetry install
@@ -43,7 +43,7 @@ pipeline:
                   identifier: Unittest
                   spec:
                     connectorRef: account.harnessImage
-                    image: sunpeek/poetry:3.11-slim
+                    image: sunpeek/poetry
                     shell: Sh
                     command: |
                       python -m unittest realworld.tests.test_units --junit-xml=output-test.xml
