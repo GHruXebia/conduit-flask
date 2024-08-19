@@ -37,5 +37,6 @@ pipeline:
                     image: python:3.11-slim
                     language: Python
                     buildTool: Unittest
+                    args: realworld.tests.test_utils
                     runOnlySelectedTests: true
                     enableTestSplitting: false
