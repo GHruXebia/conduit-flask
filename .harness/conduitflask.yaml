@@ -1,0 +1,41 @@
+pipeline:
+  name: conduit-flask
+  identifier: conduitflask
+  projectIdentifier: k3d
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: account.Github_OAuth_1723535805475
+        repoName: GHruXebia/conduit-flask
+        build: <+input>
+  stages:
+    - stage:
+        name: Build
+        identifier: Build
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: k3dmac
+              namespace: harness-ci
+              automountServiceAccountToken: true
+              nodeSelector: {}
+              os: Linux
+          execution:
+            steps:
+              - step:
+                  type: RunTests
+                  name: Test
+                  identifier: Test
+                  spec:
+                    connectorRef: DockerHub
+                    image: python:3.11-slim
+                    language: Python
+                    buildTool: Unittest
+                    runOnlySelectedTests: true
+                    enableTestSplitting: false
