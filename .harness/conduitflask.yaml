@@ -36,14 +36,4 @@ pipeline:
                     image: python:3.11-slim
                     shell: Sh
                     command: |
-                      apt-get update && apt-get install -y python3-dev cargo && pip install poetry && poetry install
-              - step:
-                  type: Run
-                  name: Unittest
-                  identifier: Unittest
-                  spec:
-                    connectorRef: account.harnessImage
-                    image: python:3.11-slim
-                    shell: Sh
-                    command: |
-                      poetry run pytest
+                      apt-get update && apt-get install -y python3-dev cargo && pip install poetry && poetry install && poetry run pytest
