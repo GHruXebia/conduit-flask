@@ -35,7 +35,8 @@ pipeline:
                     connectorRef: account.harnessImage
                     image: python:latest
                     shell: Sh
-                    command: sudo apt-get update && sudo apt-get install -y python3-dev cargo && pip install poetry && poetry install
+                    command: |
+                      sudo apt-get update && sudo apt-get install -y python3-dev cargo && pip install poetry && poetry install
               - step:
                   type: Run
                   name: Unittest
