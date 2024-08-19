@@ -46,9 +46,4 @@ pipeline:
                     image: python:3.11-slim
                     shell: Sh
                     command: |
-                      python -m unittest realworld.tests.test_units --junit-xml=output-test.xml
-                    reports:
-                      type: JUnit
-                      spec:
-                        paths:
-                          - output-test.xml
+                      poetry run pytest
