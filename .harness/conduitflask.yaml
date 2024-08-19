@@ -12,9 +12,8 @@ pipeline:
         build: <+input>
   stages:
     - stage:
-        name: Build
-        identifier: Build
-        description: ""
+        name: test
+        identifier: test
         type: CI
         spec:
           cloneCodebase: true
@@ -29,14 +28,28 @@ pipeline:
           execution:
             steps:
               - step:
-                  type: RunTests
-                  name: Test
-                  identifier: Test
+                  type: Run
+                  name: Install Dependencies
+                  identifier: Install_Dependencies
                   spec:
-                    connectorRef: DockerHub
-                    image: python:3.11-slim
-                    language: Python
-                    buildTool: Unittest
-                    args: realworld.tests.test_utils
-                    runOnlySelectedTests: true
-                    enableTestSplitting: false
+                    connectorRef: account.harnessImage
+                    image: python:latest
+                    shell: Sh
+                    command: |-
+                      sudo apt-get update && sudo apt-get install -y python3-dev && sudo apt-get install default-libmysqlclient-dev
+                      pip install poetry && poetry install
+              - step:
+                  type: Run
+                  name: Pytest
+                  identifier: Pytest
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: python:latest
+                    shell: Sh
+                    command: |
+                      python -m unittest realworld.tests.test_units --junit-xml=output-test.xml
+                    reports:
+                      type: JUnit
+                      spec:
+                        paths:
+                          - output-test.xml
