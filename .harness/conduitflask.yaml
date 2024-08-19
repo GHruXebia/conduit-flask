@@ -33,18 +33,17 @@ pipeline:
                   identifier: Install_Dependencies
                   spec:
                     connectorRef: account.harnessImage
-                    image: python:latest
+                    image: sunpeek/poetry:3.11-slim
                     shell: Sh
-                    command: |-
-                      sudo apt-get update && sudo apt-get install -y python3-dev && sudo apt-get install default-libmysqlclient-dev
-                      pip install poetry && poetry install
+                    command: |
+                      poetry install
               - step:
                   type: Run
-                  name: Pytest
-                  identifier: Pytest
+                  name: Unittest
+                  identifier: Unittest
                   spec:
                     connectorRef: account.harnessImage
-                    image: python:latest
+                    image: sunpeek/poetry:3.11-slim
                     shell: Sh
                     command: |
                       python -m unittest realworld.tests.test_units --junit-xml=output-test.xml
