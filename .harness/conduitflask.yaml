@@ -36,7 +36,7 @@ pipeline:
                     image: python:3.11-slim
                     shell: Sh
                     command: |
-                      sudo apt-get update && sudo apt-get install -y python3-dev cargo && pip install poetry && poetry install
+                      apt-get update && apt-get install -y python3-dev cargo && pip install poetry && poetry install
               - step:
                   type: Run
                   name: Unittest
